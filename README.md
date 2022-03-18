@@ -1,4 +1,19 @@
 # eth_track
+
+# Simple Github workflow
+```
+# Pull from master
+$ git pull
+# Create (-b) or switch (no -b) to another branch
+$ git checkout -b <branch name>
+# Make changes
+$ git add .
+$ git commit -m "<message>"
+$ git push origin <branch name>
+```
+
+
+
 ***
 ## Install required python libraries
 ```bash
