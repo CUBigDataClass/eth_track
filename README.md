@@ -3,7 +3,7 @@
 # Simple Github workflow
 ```
 # Pull from master
-$ git pull
+$ git pull origin master
 # Create (-b) or switch (no -b) to another branch
 $ git checkout -b <branch name>
 # Make changes
