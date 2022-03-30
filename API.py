@@ -36,7 +36,7 @@ class Api():
                 "page" : "1",
                 "offset" : f"{self.numResults}",
                 "sort" : "asc",
-                "apikey" : "EV9GPRDYRMVKQGSI9ZFWAHV5W2Q96IRSPA",
+                "apikey" : "------",
                 }
             
             self.a = requests.get("https://api.etherscan.io/api", data = self.call)
