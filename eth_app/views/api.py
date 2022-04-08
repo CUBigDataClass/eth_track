@@ -1,4 +1,3 @@
-
 from flask import Blueprint
 from flask import current_app
 from flask import jsonify
@@ -13,7 +12,6 @@ import os
 API_KEY = os.getenv("API_KEY")
 
 bp = Blueprint('api', __name__)
-
 
 @bp.route("/datatypes", methods = ["GET"])
 def datatypes():
@@ -34,13 +32,11 @@ def datatypes():
         data.append(d)
     return jsonify(data)
 
-
 @bp.route("/getdata", methods = ["GET", "POST"])
 def call():
     data = "hello world"
     print(dict(g))
     return jsonify({"data" : data})
-
 
 def eth_update(start_block, end_block, num_results, final_block, increment):
     run = API(API_KEY)
@@ -50,15 +46,8 @@ def eth_update(start_block, end_block, num_results, final_block, increment):
 
 #example.com?arg1=value1&arg2=value2
 
-"""
-start_block = 13481994
-end_block = 13481994
-num_results = 10
-final_block = 13481997
-increment = 1
-"""
 
-@bp.route("/update/example", methods = ["GET"])
+@bp.route("/update")
 def updateeth():
     start_block = request.args.get("startblock")
     end_block = request.args.get("endblock")
@@ -68,16 +57,3 @@ def updateeth():
 
     print(start_block, end_block, num_results, final_block, increment)
     eth_update(start_block, end_block, num_results, final_block, increment)
-
-
-
-
-
-
-
-
-
-
-
-
-
