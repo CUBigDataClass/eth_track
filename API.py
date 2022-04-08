@@ -1,3 +1,5 @@
+#Api.py
+
 """
 
 Call information from API and create lists with data stored for use in SQL
@@ -9,14 +11,16 @@ MISC: Some strange omissions of "to(or from)addresses" in some transactions in b
 import requests
 import time
 import json
-import pymysql
+import mysql.connector
 import os
 from flask import jsonify
 
+
 dbUser = os.environ.get('CLOUD_SQL_USERNAME')
 dbPassword = os.environ.get('CLOUD_SQL_PASSWORD')
+dbHost = os.environ.get('CLOUD_SQL_HOST')
 dbName = os.environ.get('CLOUD_SQL_DATABASE_NAME')
-dbConnectionName = os.environ.get('CLOUD_SQL_CONNECTION_NAME')
+
 
 class Api():
     def __init__(self):
@@ -83,25 +87,10 @@ class Api():
             print(self.value[i])
             print(self.gas[i])
             print(self.gasUsed[i])  
-
-    def dbConnect(self):
-        """ open connection to SQL database """
-        self.unix_socket = '/cloudsql/{}'.format(dbConnectionName)
-        try:
-            if os.environ.get('GAE_ENV') == 'standard':
-                self.conn = pymysql.connect(user=dbUser,
-                                            password=dbPassword, 
-                                            unix_socket=self.unix_socket, 
-                                            db=dbName, 
-                                            cursorclass=pymysql.cursors.DictCursor
-                                            )
-        except pymysql.MySQLError as e:
-            return e
-        return self.conn
     
     def dbGet(self):
         """ GET from SQL database """
-        self.conn = self.dbConnect()
+        self.conn = mysql.connector.connect(user=dbUser, password=dbPassword, host=dbHost, database=dbName)
         self.cursor = self.conn.cursor()
         self.result = self.cursor.execute('SELECT * FROM test;')
         self.test = self.cursor.fetchall()
@@ -111,12 +100,12 @@ class Api():
 
     def dbStore(self):
         """ store data to SQL database """
-        self.conn = self.dbConnect()
+        self.conn = mysql.connector.connect(user=dbUser, password=dbPassword, host=dbHost, database=dbName)
         self.cursor = self.conn.cursor()
 
         for self.resultDict in self.resultDicts:
             self.query = ("INSERT INTO test (timeStamp, blockNumber, from, to, value, gas, gasUsed)"
-                            "values (%s, %s, %s, %s, %s, %s, %s) WHERE NOT EXISTS ")
+                            "VALUES (%s, %s, %s, %s, %s, %s, %s) WHERE NOT EXISTS ")
             self.vals = (self.resultDict['timeStamp'],
                         self.resultDict['blockNumber'],
                         self.resultDict['from'],
@@ -139,5 +128,4 @@ if __name__ == "__main__":
     run.call(13481994, 13481994, numResults = 10, finalBlock = 13481997, increment = 1)
     run.display()
     run.dbStore()
-    print(run.dbGet())
-    
+    #run.dbGet()
