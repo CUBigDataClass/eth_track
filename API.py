@@ -6,12 +6,22 @@ MISC: Some strange omissions of "to(or from)addresses" in some transactions in b
 
 """
 
-import requests, time, json
+import requests
+import time
+import json
+import pymysql
+import os
+from flask import jsonify
+
+dbUser = os.environ.get('CLOUD_SQL_USERNAME')
+dbPassword = os.environ.get('CLOUD_SQL_PASSWORD')
+dbName = os.environ.get('CLOUD_SQL_DATABASE_NAME')
+dbConnectionName = os.environ.get('CLOUD_SQL_CONNECTION_NAME')
 
 class Api():
     def __init__(self):
         
-        self.blockNum, self.fromAdd, self.toAdd, self.value, self.gas, self.gasUsed = [], [], [], [], [], []
+        self.blockNum, self.timeStamp, self.fromAdd, self.toAdd, self.value, self.gas, self.gasUsed = [], [], [], [], [], [], []
     
     def call(self, startBlock, endBlock, numResults, finalBlock, increment):
         """ call Etherscan.io internal transactions API
@@ -44,8 +54,18 @@ class Api():
             self.resultDicts = self.responseDict['result']
             
             self.resultDict = self.resultDicts[0]
+                    
+            self.startBlock += increment
+            self.endBlock += increment
             
-            for self.resultDict in self.resultDicts:
+            if self.startBlock == finalBlock:
+                self.running = False
+
+    def display(self):
+        """ set results in lists and print """
+
+        for self.resultDict in self.resultDicts:
+                self.timeStamp.append(self.resultDict['timeStamp'])
                 self.blockNum.append(self.resultDict['blockNumber'])
                 self.fromAdd.append(self.resultDict['from'])
                 self.toAdd.append(self.resultDict['to'])
@@ -53,17 +73,10 @@ class Api():
                 self.gas.append(self.resultDict['gas'])
                 self.gasUsed.append(self.resultDict['gasUsed'])
                 
-            print(f"Total Internal Transactions returned in Block Range #{self.startBlock}-{self.endBlock}: {len(self.resultDicts)}")
-                    
-            self.startBlock += increment
-            self.endBlock += increment
-            
-            if self.startBlock == finalBlock:
-                self.running = False
-    
-    def display(self):
-        """ check results and print, or store in SQL database """
+        print(f"Total Internal Transactions returned in Block Range #{self.startBlock}-{self.endBlock}: {len(self.resultDicts)}")
+
         for i in range(len(self.blockNum)):
+            print(self.timeStamp[i])
             print(self.blockNum[i])
             print(self.fromAdd[i])
             print(self.toAdd[i])
@@ -71,11 +84,60 @@ class Api():
             print(self.gas[i])
             print(self.gasUsed[i])  
 
+    def dbConnect(self):
+        """ open connection to SQL database """
+        self.unix_socket = '/cloudsql/{}'.format(dbConnectionName)
+        try:
+            if os.environ.get('GAE_ENV') == 'standard':
+                self.conn = pymysql.connect(user=dbUser,
+                                            password=dbPassword, 
+                                            unix_socket=self.unix_socket, 
+                                            db=dbName, 
+                                            cursorclass=pymysql.cursors.DictCursor
+                                            )
+        except pymysql.MySQLError as e:
+            return e
+        return self.conn
+    
+    def dbGet(self):
+        """ GET from SQL database """
+        self.conn = self.dbConnect()
+        self.cursor = self.conn.cursor()
+        self.result = self.cursor.execute('SELECT * FROM test;')
+        self.test = self.cursor.fetchall()
+        
+        return jsonify(self.test)
+
+
+    def dbStore(self):
+        """ store data to SQL database """
+        self.conn = self.dbConnect()
+        self.cursor = self.conn.cursor()
+
+        for self.resultDict in self.resultDicts:
+            self.query = ("INSERT INTO test (timeStamp, blockNumber, from, to, value, gas, gasUsed)"
+                            "values (%s, %s, %s, %s, %s, %s, %s) WHERE NOT EXISTS ")
+            self.vals = (self.resultDict['timeStamp'],
+                        self.resultDict['blockNumber'],
+                        self.resultDict['from'],
+                        self.resultDict['to'],
+                        self.resultDict['value'],
+                        self.resultDict['gas'],
+                        self.resultDict['gasUsed'])
+
+            self.cursor.execute(self.query, self.vals)
+            self.conn.commmit()
+        self.cursor.close()
+        self.conn.close()
+
+        
 
 if __name__ == "__main__":
     
     run = Api()
     
-    
     run.call(13481994, 13481994, numResults = 10, finalBlock = 13481997, increment = 1)
     run.display()
+    run.dbStore()
+    print(run.dbGet())
+    
