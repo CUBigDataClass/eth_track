@@ -50,9 +50,9 @@ def eth_update(start_block, end_block, num_results, final_block, increment):
 @bp.route("/update")
 def updateeth():
     start_block = request.args.get("startblock")
-    end_block = request.args.get("endblock")
+    end_block = request.args.get("incrementblock")
     num_results = request.args.get("numresults")
-    final_block = request.args.get("finalblock")
+    final_block = request.args.get("endblock")
     increment = request.args.get("increment")
 
     print(start_block, end_block, num_results, final_block, increment)

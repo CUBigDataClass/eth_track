@@ -1,0 +1,20 @@
+{
+	"Data" : [
+		{"Address" : "",
+		 {"Gas" : "", "GasIndex" : 1},
+		 {"Volume" : "", "VolumeIndex" : 2},
+		 {"Eth" : "", "EthIndex" : 5}},
+		{"Address" : "",
+		 {"GasUsed" : "", "GasIndex" : 1},
+		 {"Total" : "", "TotalIndex" : 2},
+		 {"Value" : "", "ValueIndex" : 5}}
+	],
+	"Meta" : "",
+	"Data" : "",
+	...
+}
+
+
+
+
+
