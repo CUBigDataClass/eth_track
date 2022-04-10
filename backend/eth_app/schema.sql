@@ -3,14 +3,6 @@ DROP TABLE IF EXISTS ethentry;
 DROP TABLE IF EXISTS datatype;
 
 
-CREATE TABLE user (
-	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	username TEXT UNIQUE NOT NULL,
-	PASSWORD TEXT NOT NULL,
-	address TEXT NOT NULL,
-	startblock INTEGER NOT NULL,
-	public BOOLEAN NOT NULL
-);
 
 CREATE TABLE datatype (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,17 +12,15 @@ CREATE TABLE datatype (
 );
 
 CREATE TABLE ethentry (
-	datakey INTEGER NOT NULL,
-	userkey INTEGER NOT NULL,
-	volume INTEGER NOT NULL,
-	magnitude INTEGER NOT NULL,
-	startdate TIMESTAMP NOT NULL,
-	enddate TIMESTAMP NOT NULL,
-	startblock INTEGER NOT NULL,
-	endblock INTEGER NOT NULL,
-	FOREIGN KEY (userkey) REFERENCES user (id),
-	FOREIGN KEY (datakey) REFERENCES data (id)
+	time DATETIME PRIMARY KEY,
+	blocknumber INTEGER NOT NULL,
+	fromaddress VARCHAR(255) NOT NULL,
+	toaddress VARCHAR(255) NOT NULL,
+	ethvalue INTEGER NOT NULL,
+	gas INTEGER NOT NULL,
+	gasUsed INTEGER NOT NULL
 );
+
 
 
 INSERT INTO datatype (title, units, description)
