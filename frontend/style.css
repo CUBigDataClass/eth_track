@@ -37,15 +37,13 @@ h3{
   font-size: 20px;
 }
 
-#results{
-  background-color: #4F91CF;
-}
-
 #pggrid{
   display:grid;
   grid-template-columns:1fr 4fr;
   grid-template-rows:1fr;
 }
+
+/* Sidebar Styling */
 
 #leaderboard{
   margin-top: 10vh;
@@ -66,4 +64,37 @@ h3{
   border-bottom: 1px solid #4F91CF;
   height: 200px;
   padding-bottom: 20px;
+}
+
+div.search{
+  width:100%;
+}
+
+#results{
+  background-color: #4F91CF;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 30px;
+  border-radius:5px;
+  border:none;
+  color: #FFF;
+  padding:7px 0px;
+  font-size: 15px;
+}
+
+input.search{
+  width: 80%;
+  border: solid 1px #4F91CF;
+  margin-left: 10%;
+  background-color: transparent;
+  color: rgba(255,255,255, .2);
+  margin-top: 7px;
+  margin-bottom: 10px;
+  border-radius:5px;
+  padding: 4px 0px 4px 10px;
+}
+
+div.search label{
+  margin-left:10%;
+
 }
