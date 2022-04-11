@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Etherium Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+ <div id="pggrid">
+   <div>
+     <div> </div>
+     <div>
+       <h3>Specify Block Range</h3>
+       <form>
+         <label>From:</label>
+         <input type="search">
+         <br/>
+         <label>To:</label>
+         <input type="search">
+         <br/>
+         <input type="button" value="Results" id="results">
+       </div>
+    </div>
+    <div id="leaderboard">
+      <H1>Etherium Leaderboard</h1>
+      <table>
+        <tr>
+          <th></th>
+          <th>Block</th>
+          <th>Transactions</th>
+          <th>Gas Used</th>
+          <th><select name="volume">
+            <option value="volume">Transaction Volume</option>
+            <option value="eth">Etherium Value</option>
+            <option value="gas">Gas Used</option>
+            </select></th>
+        </tr>
+        <tr>
+          <td>1.</td>
+          <td>14543575</td>
+          <td>1,531.87 M (12.7 TPS)</td>
+          <td>21,828,566 (72.69%, +45%)</td>
+          <td><button>View more</button></td>
+        </tr>
+      </table>
+
+    </div>
+ </div>
+</body>
+</html>

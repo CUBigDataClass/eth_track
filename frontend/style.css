@@ -1,0 +1,26 @@
+body{
+  background-color:black;
+}
+
+h1{
+  color: #4F91CF;
+  text-align: center;
+}
+
+th{
+  color: #85CF4F;
+}
+
+td, h3, label{
+  color:#FFFFFF;
+}
+
+#results{
+  background-color: #4F91CF;
+}
+
+#pggrid{
+  display:grid;
+  grid-template-columns:1fr 4fr;
+  grid-template-rows:1fr;
+}
