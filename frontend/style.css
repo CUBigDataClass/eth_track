@@ -7,25 +7,52 @@ h1{
   color: #4F91CF;
   text-align:center;
 margin-right:20%;
+font-family: "Press Start 2P";
+margin-bottom: 4vh;
 }
 
 table{
    border-collapse: collapse;
      width: 90%;
+     margin-left: 3vw;
 }
 
 th{
   color: #85CF4F;
+  font-family: "Press Start 2P";
 }
 
 tr.thead{
   border-bottom: 1px solid rgba(79,145,207,.3);
+  padding-bottom: 10px;
+}
+
+td{
+  padding: 10px;
 }
 
 
 
-td, h3, label{
+
+
+td, h3, label, button, select{
   color:#FFFFFF;
+  font-family: helvetica;
+}
+
+button, select, option{
+  background-color: transparent;
+  border: 1px #4F91CF solid;
+  border-radius: 8px;
+  padding:7px 22px;
+}
+
+button{
+  font-size: 11px;
+}
+
+select{
+  text-align: left;
 }
 
 td{
