@@ -29,15 +29,23 @@
       <H1>Etherium Leaderboard</h1>
       <table>
         <tr class="thead">
-          <th></th>
+          <th><div id="rheight"></div></th>
           <th>Block</th>
           <th>Transactions</th>
           <th>Gas Used</th>
-          <th><select name="volume">
-            <option value="volume">Transaction Volume</option>
-            <option value="eth">Etherium Value</option>
-            <option value="gas">Gas Used</option>
-            </select></th>
+          <th>
+            <div class="dropdown">
+  <button class="dropbtn">Sort by</button>
+    <div class="dropdown-content">
+      <div id="invisible"></div>
+      <div id="border">
+      <a href="#" id="tv">Transaction Volume</a>
+      <a href="#" id="ev">Etherium Value</a>
+      <a href="#" id="gas">Gas Used</a>
+    </div>
+    </div>
+  </div>
+</th>
         </tr>
       </table>
 
