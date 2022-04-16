@@ -23,6 +23,8 @@ def create_app():
     configure_db(app)
     configure_errorhandlers(app)
 
+    
+   
     return app
 
 def configure_app(app):
@@ -48,5 +50,6 @@ def configure_db(app):
     print("Configuring db")
     app.config.from_mapping(
             DATABASE=os.path.join(app.instance_path, "eth_app.sqlite"),
+            DEBUG=True
         )
 

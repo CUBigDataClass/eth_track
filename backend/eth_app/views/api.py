@@ -8,52 +8,54 @@ from eth_app.db import get_db
 from eth_app.eth_data import API
 
 import os
+import pandas as pd
+import numpy as np
 
 API_KEY = os.getenv("API_KEY")
 
 bp = Blueprint('api', __name__)
 
-@bp.route("/datatypes", methods = ["GET"])
-def datatypes():
-    db = get_db()
-    datatypes = db.execute(
-        'SELECT p.id, title, units, description'
-        ' FROM datatype p'
-    ).fetchall()
-
-    data = []
-
-    for row in datatypes:
-        d = {}
-        d["id"] = row["id"]
-        d["Title"] = row["title"]
-        d["Units"] = row["units"]
-        d["Description"] = row["description"]
-        data.append(d)
-    return jsonify(data)
-
-@bp.route("/getdata", methods = ["GET", "POST"])
-def call():
-    data = "hello world"
-    print(dict(g))
-    return jsonify({"data" : data})
-
-def eth_update(start_block, end_block, num_results, final_block, increment):
-    run = API(API_KEY)
-    run.call(start_block, end_block, num_results, final_block, increment)
-    run.display()
-
-
-#example.com?arg1=value1&arg2=value2
-
-
-@bp.route("/update")
+@bp.route("/getdata")
 def updateeth():
-    start_block = request.args.get("startblock")
-    end_block = request.args.get("incrementblock")
-    num_results = request.args.get("numresults")
-    final_block = request.args.get("endblock")
-    increment = request.args.get("increment")
+    start_block = int(request.args.get("startblock"))
+    end_block = int(request.args.get("endblock"))
 
-    print(start_block, end_block, num_results, final_block, increment)
-    eth_update(start_block, end_block, num_results, final_block, increment)
+    # CHANGE THIS
+    df = pd.read_csv("./test.csv")
+    df = df[(df["blocknumber"] <= end_block) & (df["blocknumber"] >= start_block)]
+
+    addresses = list(set(df["fromaddress"].unique()) | set(df["toaddress"].unique()))
+
+    data = {"address" : [], "Volume" : [], "Gas" : [], "Eth" : [], "GasUsed" : []}
+
+    for address in addresses:
+        data["address"].append(address)
+        subset = df[(df["fromaddress"] == address) | (df["toaddress"] == address)]
+        volume = len(subset)
+        s = subset.sum()
+        
+        data["Volume"].append(volume)
+        data["Gas"].append(s.gas)
+        data["Eth"].append(s.ethvalue)
+        data["GasUsed"].append(s.gasUsed)
+        
+        
+    df_ = pd.DataFrame(data)
+    df_[["v_rank", "g_rank", "gu_rank", "e_rank"]] = 0
+    df_.loc[df_.sort_values("Volume").index, "v_rank"] = np.arange(len(df_))
+    df_.loc[df_.sort_values("Gas").index, "g_rank"] = np.arange(len(df_))
+    df_.loc[df_.sort_values("Eth").index, "e_rank"] = np.arange(len(df_))
+    df_.loc[df_.sort_values("GasUsed").index, "gu_rank"] = np.arange(len(df_))
+
+    ret = {"Data" : []}
+    for i, data in df_.iterrows():
+        pt = {}
+        pt["address"] = int(data.address)
+        pt["Gas"] = {"Magnitude" : int(data.Gas), "Rank" : int(data.g_rank)}
+        pt["Volume"] = {"Magnitude" : int(data.Volume), "Rank" : int(data.v_rank)}
+        pt["Eth"] = {"Magnitude" : int(data.Eth), "Rank" : int(data.e_rank)}
+        pt["GasUsed"] = {"Magnitude" : int(data.GasUsed), "Rank" : int(data.gu_rank)}
+        ret["Data"].append(pt)
+    ret["addresses"] = [int(a) for a in addresses]
+
+    return jsonify(ret)
