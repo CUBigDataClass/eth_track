@@ -20,6 +20,10 @@ def updateeth():
     start_block = int(request.args.get("startblock"))
     end_block = int(request.args.get("endblock"))
 
+    api = Api()
+    api.call(start_block, end_block, 10000)
+    
+    """
     # CHANGE THIS
     df = pd.read_csv("./test.csv")
     df = df[(df["blocknumber"] <= end_block) & (df["blocknumber"] >= start_block)]
@@ -59,3 +63,6 @@ def updateeth():
     ret["addresses"] = [int(a) for a in addresses]
 
     return jsonify(ret)
+    """
+
+    return "hello"
