@@ -1,0 +1,16 @@
+INSERT INTO ethentry4 
+(timestamp, blocknumber, fromaddress, toaddress, ethvalue, gas, gasused) 
+SELECT 
+a.blocknumber,
+a.fromaddress,
+a.toadress,
+a.ethvalue 
+FROM ethentry4
+WHERE NOT EXISTS (SELECT timestamp FROM ethentry4) 
+VALUES (%s, %s, %s, %s, %s, %s, %s)
+
+INSERT INTO ethentry4 
+(timestamp, blocknumber, fromaddress, toaddress, ethvalue, gas, gasused) 
+VALUES (%s, %s, %s, %s, %s, %s, %s)
+SELECT DISTINCT   ‘blocknumber’ + ‘fromaddress’ + ‘toadress’+ ‘ethvalue’
+FROM ethentry4
