@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Etherium Tracker</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+         href="https://fonts.googleapis.com/css?family=Press+Start+2P">
+</head>
+
+<body>
+ <div id="pggrid">
+   <div id="sidebar">
+     <div id="logo">Logo Placeholder</div>
+     <div class="search">
+       <h3>Specify<br/>Block Range</h3>
+       <form>
+         <label>From:</label>
+         <br/>
+         <input type="search" class="search" value="Start Block" onfocus="this.value=''" onblur="this.value='Start Block'">
+         <br/>
+         <label>To:</label>
+         <br/>
+         <input type="search" class="search" value="End Block" onfocus="this.value=''" onblur="this.value='End Block'">
+         <br/>
+         <input type="button" value="Results" id="results">
+       </div>
+    </div>
+    <div id="leaderboard">
+      <H1>Etherium Leaderboard</h1>
+      <table>
+        <tr class="thead">
+          <th><div id="rheight"></div></th>
+          <th>Block</th>
+          <th>Transactions</th>
+          <th>Gas Used</th>
+          <th>
+            <div class="dropdown">
+  <button class="dropbtn">Sort by</button>
+    <div class="dropdown-content">
+      <div id="invisible"></div>
+      <div id="border">
+      <a href="#" id="tv">Transaction Volume</a>
+      <a href="#" id="ev">Etherium Value</a>
+      <a href="#" id="gas">Gas Used</a>
+    </div>
+    </div>
+  </div>
+</th>
+        </tr>
+      </table>
+
+    </div>
+ </div>
+ <script type="text/javascript" src="script.js">
+</body>
+</html>
