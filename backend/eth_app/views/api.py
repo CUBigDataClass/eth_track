@@ -5,7 +5,7 @@ from flask import g
 from flask import request
 
 from eth_app.db import get_db
-from eth_app.eth_data import API
+from eth_app.API import Api
 
 import os
 import pandas as pd
