@@ -6,8 +6,8 @@ Call information from API and create lists with data stored for use in SQL
 
 MISC: Some strange omissions of "to(or from)addresses" in some transactions in block #13481995, 
 make sure the SQL database allows null inputs for everything
->>>>>>> Kevin:API.py
 
+"""
 
 import requests
 import time
@@ -43,7 +43,7 @@ class Api():
         self.endBlock = endBlock
         self.incBlock = self.increment + self.startBlock
         self.numResults = numResults
-
+        
         while self.running == True:
 
             time.sleep(.25)
@@ -61,12 +61,13 @@ class Api():
                 "sort" : "asc",
                 "apikey" : f"{apiKey}",
                 }
-
+            
             self.a = requests.get("https://api.etherscan.io/api", data = self.call)
+            
             #insert try logic
             self.responseDict = self.a.json()
             self.resultDicts = self.responseDict['result']
-
+            
             self.resultDict = self.resultDicts[0]
 
             if self.incBlock >= self.endBlock:
@@ -86,7 +87,6 @@ class Api():
                 self.value.append(self.resultDict['value'])
                 self.gas.append(self.resultDict['gas'])
                 self.gasUsed.append(self.resultDict['gasUsed'])
-
                 
         print(f"Total Internal Transactions returned in Block Range #{startBlock}-{endBlock}: {len(self.resultDicts)}")
 
