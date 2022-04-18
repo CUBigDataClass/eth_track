@@ -10,46 +10,30 @@ from flask import flash
 from flask import g
 from flask import redirect
 from flask import request
+from flask_sqlalchemy import SQLAlchemy
 
 
 def create_app():
     app = Flask('eth_app')
+    app.debug = True
 
-    configure_app(app)
-    configure_dirs(app)
-    configure_logging(app)
-    configure_app_root(app)
     configure_blueprints(app)
-    configure_db(app)
-    configure_errorhandlers(app)
-
-    
+    db = configure_db(app)
    
     return app
 
-def configure_app(app):
-    print("Configuring App")
-
-def configure_dirs(app):
-    print("Configuring directories")
-
-def configure_logging(app):
-    print("Configuring logging")
-
-def configure_app_root(app):
-    print("Configuring root")
-
-def configure_errorhandlers(app):
-    print("Configuring errors")
 
 def configure_blueprints(app):
     import eth_app.views
     app.register_blueprint(eth_app.views.api, url_prefix = "/api")
 
 def configure_db(app):
-    print("Configuring db")
     app.config.from_mapping(
+            SQLALCHEMY_DATABASE_URI="sqlite:///site.db",
             DATABASE=os.path.join(app.instance_path, "eth_app.sqlite"),
             DEBUG=True
         )
+    db = SQLAlchemy(app)
+    return db
 
+class EthItem(db.Model):

@@ -15,6 +15,10 @@ API_KEY = os.getenv("API_KEY")
 
 bp = Blueprint('api', __name__)
 
+@bp.route("/test")
+def test():
+    return "hello world"
+
 @bp.route("/getdata")
 def updateeth():
     start_block = int(request.args.get("startblock"))
@@ -23,7 +27,6 @@ def updateeth():
     api = Api()
     api.call(start_block, end_block, 10000)
     
-    """
     # CHANGE THIS
     df = pd.read_csv("./test.csv")
     df = df[(df["blocknumber"] <= end_block) & (df["blocknumber"] >= start_block)]
@@ -63,6 +66,3 @@ def updateeth():
     ret["addresses"] = [int(a) for a in addresses]
 
     return jsonify(ret)
-    """
-
-    return "hello"
