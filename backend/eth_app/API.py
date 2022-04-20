@@ -20,13 +20,14 @@ dbPassword = os.environ.get('CLOUD_SQL_PASSWORD')
 dbHost = os.environ.get('CLOUD_SQL_HOST')
 dbName = os.environ.get('CLOUD_SQL_DATABASE_NAME')
 apiKey = os.environ.get('ETHER_SCAN_API_KEY')
+print(apiKey)
 
 class Api():
     def __init__(self):
         
         self.blockNum, self.timeStamp, self.fromAdd, self.toAdd, self.value, self.gas, self.gasUsed = [], [], [], [], [], [], []
     
-    def call(self, startBlock, endBlock, numResults):
+    def call(self, startBlock, endBlock):
         """ call Etherscan.io internal transactions API
         start block and end block (max range of 100 to ensure no data loss)
         numResults = number of transactions per call (max 10000)
@@ -42,7 +43,6 @@ class Api():
         self.startBlock = startBlock
         self.endBlock = endBlock
         self.incBlock = self.increment + self.startBlock
-        self.numResults = numResults
         
         while self.running == True:
 
@@ -52,23 +52,21 @@ class Api():
                 self.incBlock = self.endBlock
         
             self.call = {
-                "module" : "account",
-                "action" : "txlistinternal",
-                "startblock" : f"{self.startBlock}",
-                "endblock" : f"{self.incBlock}", 
-                "page" : "1",
-                "offset" : f"{self.numResults}",
-                "sort" : "asc",
-                "apikey" : f"{apiKey}",
+                    "module" : "account",
+                    "action" : "txlistinternal",
+                    "startblock" : f"{self.startBlock}",
+                    "endblock" : f"{self.incBlock}", 
+                    "sort" : "asc",
+                    "apikey" : f"{apiKey}",
                 }
-            
+            print(self.call) 
             self.a = requests.get("https://api.etherscan.io/api", data = self.call)
             
             #insert try logic
             self.responseDict = self.a.json()
             self.resultDicts = self.responseDict['result']
             
-            self.resultDict = self.resultDicts[0]
+            
 
             if self.incBlock >= self.endBlock:
                 self.running = False
@@ -144,7 +142,7 @@ if __name__ == "__main__":
     startBlock = 13481994
     endBlock = 13482094
     
-    run.call(startBlock, endBlock, numResults = 100)
+    run.call(startBlock, endBlock)
     run.display(startBlock, endBlock)
     run.dbStore()
     #run.dbGet()

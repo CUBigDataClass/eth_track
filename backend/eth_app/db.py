@@ -1,43 +1,56 @@
-import sqlite3
+import os
+import pymysql
+from google.cloud.sql.connector import connector
+from flask import jsonify
 
-import click
-from flask import current_app, g
-from flask.cli import with_appcontext
+
+dbUser = os.environ.get('CLOUD_SQL_USERNAME')
+dbPassword = os.environ.get('CLOUD_SQL_PASSWORD')
+dbName = os.environ.get('CLOUD_SQL_DATABASE_NAME')
+dbConnection = os.environ.get("CLOUD_SQL_CONNECTION_NAME")
+#apiKey = os.environ.get('ETHER_SCAN_API_KEY')
+dbHost = os.environ.get("CLOUD_SQL_HOST")
 
 
-def get_db():
-    if 'db' not in g:
-        g.db = sqlite3.connect(
-            current_app.config['DATABASE'],
-            detect_types=sqlite3.PARSE_DECLTYPES
+def get_connection():
+    socket = '/cloudsql/{}'.format(dbConnection)
+    try:
+        conn: pymysql.connections.Connection = connector.connect(
+            os.environ["CLOUD_SQL_CONNECTION_NAME"],
+            "pymysql",
+            user=os.environ["CLOUD_SQL_USERNAME"],
+            password=os.environ["CLOUD_SQL_PASSWORD"],
+            db=os.environ["CLOUD_SQL_DATABASE_NAME"],
         )
-        g.db.row_factory = sqlite3.Row
+    except pymysql.MySQLError as e:
+        print(e)
 
-    return g.db
+    return conn
 
+def get_data(startblock, endblock):
+    print("GETTING DATA")
+    conn = get_connection()
+    with conn.cursor() as cursor:
+        result = cursor.execute(f"SELECT * FROM ethelements WHERE blocknumber BETWEEN {startblock} AND {endblock};")
+        data = cursor.fetchall()
+        got_data = jsonify(data)
+    conn.close()
+    return got_data
 
-def close_db(e=None):
-    db = g.pop('db', None)
+def add_data(request):
+    print("ADDING DATA")
+    conn = get_connection()
+    
+    timestamp = request["timestamp"]
+    blocknumber = request["blocknumber"]
+    fromaddress = request["fromaddress"]
+    toaddress = request["toaddress"]
+    ethvalue = request["ethvalue"]
+    gas = request["gas"]
+    gasused = request["gasused"]
 
-    if db is not None:
-        db.close()
+    with conn.cursor() as cursor:
+        cursor.execute("INSERT INTO ethelements (timestamp, blocknumber, fromaddress, toaddress, ethvalue, gas, gasUsed) VALUES (%s, %s, %s, %s, %s, %s, %s)", (timestamp, blocknumber, fromaddress, toaddress, ethvalue, gas, gasused))
 
-def init_db():
-    db = get_db()
-
-    with current_app.open_resource('schema.sql') as f:
-        db.executescript(f.read().decode('utf8'))
-
-
-# Command line interface https://flask.palletsprojects.com/en/2.0.x/cli/
-@click.command('init-db')
-@with_appcontext
-def init_db_command():
-    """Clear the existing data and create new tables."""
-    init_db()
-    click.echo('Initialized the database.')
-
-
-def init_app(app):
-    app.teardown_appcontext(close_db)
-    app.cli.add_command(init_db_command)
+    conn.commit()
+    conn.close()

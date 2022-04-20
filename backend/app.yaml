@@ -1,0 +1,8 @@
+runtime: python38
+
+env_variables:
+        CLOUD_SQL_USERNAME: root
+        CLOUD_SQL_PASSWORD: nLyJWi58aFgQLdKC#UtHpjpyq&DyPq8C&^j
+        CLOUD_SQL_DATABASE_NAME: ethelements
+        CLOUD_SQL_CONNECTION_NAME: ethtracker-345819:us-central1:ethdata
+        ETHER_SCAN_API_KEY: QT8JPG7ZA46INM8J9C89BWZDKQBHKHRYU7
