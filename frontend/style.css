@@ -4,11 +4,12 @@ body{
 }
 
 h1{
-  color: #4F91CF;
+  color: #67B4CF;
   text-align:center;
 margin-right:4%;
 font-family: "Press Start 2P";
 margin-bottom: 4vh;
+text-transform: uppercase;
 }
 
 h3{
@@ -35,6 +36,7 @@ th{
 
 tr.thead{
   border-bottom: 1px solid rgba(79,145,207,.3);
+  line-height:22px;
 }
 
 #rheight{
@@ -56,7 +58,7 @@ td, h3, label, button, a{
 
 button, #border{
   background-color: transparent;
-  border: 1px #4F91CF solid;
+  border: 1px #67B4CF solid;
   border-radius: 8px;
   font-size: 11px;
   font-weight:normal;
@@ -67,7 +69,7 @@ button{
 }
 
 button:hover{
-  background-color: #4F91CF;
+  background-color: #67B4CF;
 }
 
 
@@ -108,8 +110,8 @@ button:hover{
 
 
 .dropdown-content a:hover {
-  background-color: #4F91CF;
-  border: 1px #4F91CF solid;
+  background-color: #67B4CF;
+  border: 1px #67B4CF solid;
   margin-right: -0.2px;
   margin-top: -0.2px;
   margin-bottom: -0.2px;
@@ -122,7 +124,7 @@ button:hover{
 
 
 .dropdown:hover .dropbtn {
-  background-color: #4F91CF;
+  background-color: #67B4CF;
 }
 
 #tv{
@@ -139,8 +141,8 @@ button:hover{
   margin-top: 10vh;
   background-image: url("assets/background.png");
   background-position: top;
-background-repeat: no-repeat;
-background-size: 75vw auto;
+  background-repeat: no-repeat;
+  background-size: 75vw auto;
 }
 
 #sidebar {
@@ -159,6 +161,12 @@ background-size: 75vw auto;
   height: 200px;
   padding-bottom: 20px;
   width: 83%;
+  display:flex;
+}
+
+#logo img{
+ width:50%;
+ margin:auto
 }
 
 div.search{
@@ -167,7 +175,7 @@ div.search{
 }
 
 #results{
-  background-color: #4F91CF;
+  background-color: #67B4CF;
   width: 80%;
   margin-left: 10%;
   margin-top: 30px;
@@ -184,10 +192,10 @@ div.search{
 
 input.search{
   width: 80%;
-  border: solid 1px #4F91CF;
+  border: solid 1px #67B4CF;
   margin-left: 10%;
   background-color: transparent;
-  color: rgba(255,255,255, .2);
+  color: rgba(255,255,255, .4);
   margin-top: 7px;
   margin-bottom: 10px;
   border-radius:5px;
