@@ -23,6 +23,13 @@ document.getElementById("ev").addEventListener("click", function(){sortData(1)})
 document.getElementById("gas").addEventListener("click", function(){sortData(2)});
 
 
+document.getElementById("start").addEventListener("focus", focused);
+document.getElementById("end").addEventListener("focus", focused);
+document.getElementById("start").addEventListener("blur", blurred);
+document.getElementById("end").addEventListener("blur", blurred);
+
+document.getElementById("results").addEventListener("click", function(){searchBlock()});
+
 function parseData(resp){
 for(i=0; i<resp.Data.length; i++){
   console.log(resp.Data[i].Eth.Rank);
@@ -79,6 +86,46 @@ function sortData(t){
   }
 }
 
+function searchBlock(){
+  if(parseInt(document.getElementById("start").value) >0 && parseInt(document.getElementById("end").value) > 0){
+
+    let startblock = parseInt(document.getElementById("start").value);
+    let endblock = parseInt(document.getElementById("end").value);
+
+    fetch('https://b219-71-211-188-69.ngrok.io/api/ethelementfiltered?startblock=' + startblock + '&' + 'endblock=' +endblock + '&numresults=10')
+    .then(response =>{
+      return response.json();
+    }).then(addresses =>{
+      console.log(addresses);
+      parseData(addresses);
+    })
+    console.log("searching");
+  }else{
+    console.log("not searching");
+  }
+
+}
+
+function focused(event){
+  console.log(event.target.value);
+  if(event.target.value == "Start Block" || event.target.value == "End Block"){
+    event.target.value = "";
+  }
+  event.target.style.color = "#FFFFFF";
+}
+
+function blurred(event){
+  console.log(event.target.value);
+  if(event.target.value =="" || event.target.value == " "){
+    event.target.style.color = "rgba(255,255,255, .4)";
+    if(event.target.id == "start"){
+      event.target.value = "Start Block";
+    }
+    if(event.target.id == "end"){
+      event.target.value = "End Block";
+    }
+  }
+}
 
 //change the value of these rows in
 //accordance with the data sent from our API

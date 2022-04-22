@@ -11,17 +11,17 @@
 <body>
  <div id="pggrid">
    <div id="sidebar">
-     <div id="logo">Logo Placeholder</div>
+     <div id="logo"><img src="assets/logo.png"></div>
      <div class="search">
        <h3>Specify<br/>Block Range</h3>
        <form>
          <label>From:</label>
          <br/>
-         <input type="search" class="search" value="Start Block" onfocus="this.value=''" onblur="this.value='Start Block'">
+         <input type="search" class="search" id="start" value="Start Block" >
          <br/>
          <label>To:</label>
          <br/>
-         <input type="search" class="search" value="End Block" onfocus="this.value=''" onblur="this.value='End Block'">
+         <input type="search" class="search" id="end" value="End Block" >
          <br/>
          <input type="button" value="Results" id="results">
        </div>
@@ -31,9 +31,10 @@
       <table>
         <tr class="thead">
           <th><div id="rheight"></div></th>
-          <th>Block</th>
-          <th>Transactions</th>
-          <th>Gas Used</th>
+          <th>ADDRESS</th>
+          <th>TOTAL<BR/>ETHERIUM</th>
+          <th>GAS<BR/>USED</th>
+          <th>TRANSACTION<BR/>VOLUME</th>
           <th>
             <div class="dropdown">
   <button class="dropbtn">Sort by</button>
