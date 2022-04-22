@@ -9,7 +9,7 @@ let rowTemplate = "<tr class='block'" + "id=" + (i+1) +  "><td>" +(i+1) + ".</td
 document.querySelector("tbody").innerHTML += rowTemplate;
 }
 
-fetch('https://b219-71-211-188-69.ngrok.io/api/ethelementfiltered?startblock=14623770&endblock=14623980&numresults=10')
+fetch('https://backend-xgbqg5tkzq-uw.a.run.app/api/ethelementfiltered?startblock=14623760&endblock=14623960&numresults=10')
 .then(response =>{
   return response.json();
 }).then(addresses =>{
@@ -91,8 +91,7 @@ function searchBlock(){
 
     let startblock = parseInt(document.getElementById("start").value);
     let endblock = parseInt(document.getElementById("end").value);
-
-    fetch('https://b219-71-211-188-69.ngrok.io/api/ethelementfiltered?startblock=' + startblock + '&' + 'endblock=' +endblock + '&numresults=10')
+    fetch('https://backend-xgbqg5tkzq-uw.a.run.app/api/ethelementfiltered?startblock=' + startblock + '&' + 'endblock=' +endblock + '&numresults=10')
     .then(response =>{
       return response.json();
     }).then(addresses =>{
