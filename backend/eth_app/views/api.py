@@ -157,7 +157,7 @@ def ethelementfiltered():
     df = df[(df["blocknumber"] <= endblock) & (df["blocknumber"] >= startblock)]
 
     # All the unique addresses
-    addresses = list(set(df["fromaddress"].unique()) | set(df["toaddress"].unique()))
+    addresses = list(set(df["fromaddress"].unique()) | set(df["toaddress"].unique()) - {""})
 
     # Filtered response
     data = {"address" : [], "Volume" : [], "Gas" : [], "Eth" : [], "GasUsed" : []}
