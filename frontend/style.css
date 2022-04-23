@@ -29,6 +29,33 @@ table{
      width: 90%;
      margin-left: 3vw;
        border-spacing:80px;
+
+}
+
+#ltable{
+  max-height:66vh;
+  overflow-y:scroll;
+  width:100%;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 th{
@@ -256,4 +283,18 @@ div.search label{
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+
+@media screen and (max-width: 1350px) and (min-width: 600px) {
+  table {
+    font-size:12px;
+  }
+}
+@media screen and (min-width: 3000px) {
+  #pggrid{
+    display:grid;
+    grid-template-columns:1fr 6fr;
+    grid-template-rows:1fr;
+  }
 }
