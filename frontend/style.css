@@ -1,5 +1,3 @@
-/* to do: add more spacing between rows, change color for bottom border, check responsiveness on larger displays, add "million", hosting, change landing display to show default data*/
-
 
 body{
   background-color:black;
@@ -30,6 +28,7 @@ table{
    border-collapse: collapse;
      width: 90%;
      margin-left: 3vw;
+       border-spacing:80px;
 }
 
 th{
@@ -42,8 +41,22 @@ tr.thead{
   line-height:22px;
 }
 
+tr{
+
+}
+
+#rheight1{
+  height:0px;
+  width:10px;
+}
+
+#rheight2{
+  height:18px;
+  width:2px;
+}
+
 #rheight{
-  height: 40px;
+  height: 65px;
   width: 10px;
 }
 
@@ -63,7 +76,7 @@ button, #border{
   background-color: transparent;
   border: 1px #67B4CF solid;
   border-radius: 8px;
-  font-size: 11px;
+  font-size: 18px;
   font-weight:normal;
 }
 
@@ -84,6 +97,12 @@ button:hover{
   cursor: pointer;
 }
 
+.dropdownflex{
+  display:flex;
+  float:right;
+  margin:20px 8% 30px 0px;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
@@ -97,18 +116,19 @@ button:hover{
 
 #invisible{
   height: 3px;
-  width: 30px;
+  width: 50px;
 }
 
 
 .dropdown-content a {
   text-decoration: none;
   display: block;
-  width:135px;
+  width:170px;
   background-color: #000;
-  padding-top: 9px;
-  padding-bottom: 9px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   margin-left: -0.5px;
+  padding-left:10px;
 }
 
 
@@ -162,13 +182,14 @@ button:hover{
 #logo{
   border-bottom: 1px solid rgba(79,145,207,.3);
   height: 200px;
+  padding-top:30px;
   padding-bottom: 20px;
   width: 83%;
   display:flex;
 }
 
 #logo img{
- width:50%;
+ width:30%;
  margin:auto
 }
 
@@ -208,4 +229,31 @@ input.search{
 div.search label{
   margin-left:10%;
 
+}
+
+/* loading screen */
+#loading{
+  display:none;
+  height: 100vh;
+  width:100vw;
+  z-index:1;
+  position:absolute;
+  background-color:rgba(0,0,0,.7);
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #67B4CF; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  position:absolute;
+  top:47vh;
+  left:48vw;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
