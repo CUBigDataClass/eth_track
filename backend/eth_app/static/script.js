@@ -9,10 +9,8 @@ let rowTemplate = "<tr class='block'" + "id=" + (i+1) +  "><td>" +(i+1) + ".</td
 document.querySelector("tbody").innerHTML += rowTemplate;
 }
 
-console.log("hello world");
-
 //add default json data
-fetch('/data.json')
+fetch('data.json')
        .then(function (response) {
            return response.json();
        })
@@ -223,7 +221,9 @@ function convertToWords(num){
   }else{
     num = parseInt(num);
     let numlen = toString(num).length;
-    if(numlen>3){
+    if(numlen <2 || num == 0){
+      num = num;
+    }else if(numlen>3){
       // if(numlen>=18){
       //   num = Math.round(num*(10**-15)*100)/100;
       //   num = num.toLocaleString("en-US");
