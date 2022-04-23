@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://kit.fontawesome.com/17596c29da.js" crossorigin="anonymous"></script>
+<title>Ethereum Tracker</title>
+
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet"
+         href="https://fonts.googleapis.com/css?family=Press+Start+2P">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+<div id="loading">
+  <div class="loader"></div>
+</div>
+ <div id="pggrid">
+   <div id="sidebar">
+     <div id="logo"><img src="/assets/logo.png"></div>
+     <div class="search">
+       <h3>Specify<br/>Block Range</h3>
+       <form>
+         <label>From:</label>
+         <br/>
+         <input type="search" class="search" id="start" value="14623760" >
+         <br/>
+         <label>To:</label>
+         <br/>
+         <input type="search" class="search" id="end" value="14623960" >
+         <br/>
+         <input type="button" value="Results" id="results">
+       </div>
+    </div>
+    <div id="leaderboard">
+      <H1>Ethereum Leaderboard</h1>
+        <div class='dropdownflex'>
+        <div class="dropdown">
+<button class="dropbtn"><i class="fas fa-solid fa-filter fa-1x"></i> Sort by</button>
+<div class="dropdown-content">
+  <div id="invisible"></div>
+  <div id="border">
+  <a href="#" id="tv">Transaction Volume</a>
+  <a href="#" id="ev">Ethereum Value</a>
+  <a href="#" id="gas">Gas Used</a>
+</div>
+</div>
+</div>
+</div>
+<br>
+      <table>
+        <tr class="thead">
+          <th><div id="rheight"></div></th>
+          <th>ADDRESS</th>
+          <th>TOTAL<BR/>ETHERI=EUM</th>
+          <th>GAS<BR/>USED</th>
+          <th>TRANSACTION<BR/>VOLUME</th>
+        </tr>
+        <tr>
+          <td><div id="rheight1"></div></td>
+        </tr>
+      </table>
+
+    </div>
+ </div>
+<script type="text/javascript" src="/script.js"></script>
+</body>
+</html>
