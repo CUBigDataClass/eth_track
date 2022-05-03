@@ -1,0 +1,23 @@
+CREATE TABLE ______ (
+		transactionkey VARCHAR(255) PRIMARY KEY,
+        timestamp INTEGER,
+        blocknumber INTEGER,
+        fromaddress VARCHAR(255),
+        toaddress VARCHAR(255),
+        ethvalue FLOAT,
+        gas INTEGER,
+        gasUsed INTEGER
+);
+
+
+
+Current API:
+CREATE TABLE _______ (
+        timestamp INTEGER,
+        blocknumber INTEGER,
+        fromaddress VARCHAR(255),
+        toaddress VARCHAR(255),
+        ethvalue FLOAT,
+        gas INTEGER,
+        gasUsed INTEGER
+);
